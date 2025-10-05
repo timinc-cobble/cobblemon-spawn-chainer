@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "${modId}",
+  "version": "${modCobblemonVersion}-fabric-${modMyVersion}",
+  "name": "${modName}",
+  "description": "${modDescription}",
+  "authors": [
+    "${modAuthor}"
+  ],
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "us.timinc.mc.cobblemon.spawnchaining.fabric.SpawnChainingFabric"
+      }
+    ]
+  },
+  "depends": {
+    "java": ">=21",
+    "minecraft": "${minecraft_version}",
+    "fabric": "*",
+    "cobblemon": "${cobblemon_version}",
+    "tim_core": ">=${tim_core_fabric_version}"
+  },
+  "contact": {
+    "homepage": "${modDiscord}",
+    "issues": "${modIssues}",
+    "sources": "${modSource}"
+  },
+  "icon": "${modId}_small.png"
+}
