@@ -2,11 +2,11 @@
 
 v1.6.1-1.0
 
-Modrinth
+[Modrinth](https://modrinth.com/mod/cobblemon-spawn-chaining)
 
-CurseForge
+[CurseForge](https://legacy.curseforge.com/minecraft/mc-mods/cobblemon-spawn-chaining)
 
-GitHub
+[GitHub](https://github.com/timinc-cobble/cobblemon-spawn-chainer)
 
 ## What if…
 
