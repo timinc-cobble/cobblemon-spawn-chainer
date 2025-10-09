@@ -27,7 +27,10 @@ object SpawnChaining : AbstractMod<SpawnChaining.SpawnChainingConfig>(MOD_ID, Sp
         )
         val chainingWhitelist = mutableSetOf<PokemonMatcher>()
         val overrideBlacklist = mutableSetOf(
-            PokemonMatcher(labels = listOf("legendary", "mythical", "ultra_beast", "paradox", "pseudo_legendary"), anyLabel = true)
+            PokemonMatcher(
+                labels = listOf("legendary", "mythical", "ultra_beast", "paradox", "pseudo_legendary"),
+                anyLabel = true
+            )
         )
         val overrideWhitelist = mutableSetOf<PokemonMatcher>()
         val assumePlayerSpawnered: Boolean = true
