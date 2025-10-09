@@ -38,7 +38,7 @@ interface SpawnOverrideRecorder {
         }
 
         val props = PokemonProperties()
-        val species = pokemon.species.name.lowercase()
+        val species = pokemon.species.resourceIdentifier.path
         props.species = species
         debugger.debug("Set species to $species.")
         val form = pokemon.form.name
