@@ -4,7 +4,7 @@ v1.6.1-1.0
 
 [Modrinth](https://modrinth.com/mod/cobblemon-spawn-chaining)
 
-[CurseForge](https://legacy.curseforge.com/minecraft/mc-mods/cobblemon-spawn-chaining)
+[CurseForge](https://www.curseforge.com/minecraft/mc-mods/cobblemon-spawn-chaining)
 
 [GitHub](https://github.com/timinc-cobble/cobblemon-spawn-chainer)
 
@@ -46,7 +46,7 @@ In order to test the mod, simply load it up, give yourself a Master Ball, spawn 
 
 ## Known Issues
 
-- None. Why, who’s asking? 👀
+- v1.6.1-1.0.0 was using the wrong thing to point at a Pokémon’s species, leading to potential crashes. Don’t tinker when you’re running on fumes, kids. v1.6.1-1.0.1 remedied this.
 
 ## Roadmap
 
