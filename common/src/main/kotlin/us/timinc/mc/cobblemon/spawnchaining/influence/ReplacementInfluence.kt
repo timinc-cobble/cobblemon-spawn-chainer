@@ -22,9 +22,9 @@ class ReplacementInfluence(val context: ResourceLocation, val player: ServerPlay
 
         val debugger = SpawnChaining.debugger.getCaseDebugger()
 
-        val pokemonRep = PokemonRepresentation.FromProperties(action.props)
+        val overriddenPokemonRep = PokemonRepresentation.FromProperties(action.props)
         if (!LimitedList.PokemonMatcherList.matchesList(
-                pokemonRep.getPokemon(),
+                overriddenPokemonRep.getPokemon(),
                 SpawnChaining.config.overrideWhitelist,
                 SpawnChaining.config.overrideBlacklist
             )
@@ -42,9 +42,10 @@ class ReplacementInfluence(val context: ResourceLocation, val player: ServerPlay
             debugger.debug("No override found.")
             return
         }
-        debugger.debug("Found an override of ${override.properties.originalString} with a level mod of ${override.levelMod}.")
+        debugger.debug("Found an override of ${override.properties.species}|${override.properties.form} with a level mod of ${override.levelMod}.")
 
-        val overrideChance = getOverrideChance(player, debugger, pokemonRep)
+        val overrideChance =
+            getOverrideChance(player, debugger, PokemonRepresentation.FromProperties(override.properties))
         debugger.debug("Has a chance of $overrideChance.")
         val overrideRoll = nextFloat()
         debugger.debug("Rolled a $overrideRoll.")

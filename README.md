@@ -28,7 +28,7 @@ v1.6.1-1.0
 
 ## Testing
 
-In order to test the mod, simply load it up, give yourself a Master Ball, spawn a Regigigas with `/pokespawn regigigas`, catch the Regigigas, and give it a second to override the next spawned Pokémon.
+In order to test the mod, simply load it up, give yourself a Master Ball, spawn a Aurorus with `/pokespawn aurorus`, catch the Aurorus, and give it a second to override the next spawned Pokémon.
 
 ## Player Help
 
@@ -47,6 +47,7 @@ In order to test the mod, simply load it up, give yourself a Master Ball, spawn 
 ## Known Issues
 
 - v1.6.1-1.0.0 was using the wrong thing to point at a Pokémon’s species, leading to potential crashes. Don’t tinker when you’re running on fumes, kids. v1.6.1-1.0.1 remedied this.
+- <v1.6.1-1.0.1 pointed to the potentially overridden Pokémon when calculating points, instead of the overriding Pokémon. This led to the points never being applied properly. v1.6.1-1.0.2 remedied this.
 
 ## Roadmap
 
