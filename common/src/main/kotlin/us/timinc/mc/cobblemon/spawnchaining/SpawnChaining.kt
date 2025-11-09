@@ -23,16 +23,13 @@ object SpawnChaining : AbstractMod<SpawnChaining.SpawnChainingConfig>(MOD_ID, Sp
         val notifyPlayer: Boolean = true
         val breakOnSuccess: Boolean = true
         val chainingBlacklist = mutableSetOf(
-            PokemonMatcher(labels = listOf("legendary", "mythical", "ultra_beast", "paradox"), anyLabel = true)
+            "labels=legendary,mythical,ultra_beast,paradox"
         )
-        val chainingWhitelist = mutableSetOf<PokemonMatcher>()
+        val chainingWhitelist = mutableSetOf<String>()
         val overrideBlacklist = mutableSetOf(
-            PokemonMatcher(
-                labels = listOf("legendary", "mythical", "ultra_beast", "paradox", "pseudo_legendary"),
-                anyLabel = true
-            )
+            "labels=legendary,mythical,ultra_beast,paradox,pseudo_legendary any_label"
         )
-        val overrideWhitelist = mutableSetOf<PokemonMatcher>()
+        val overrideWhitelist = mutableSetOf<String>()
         val assumePlayerSpawnered: Boolean = true
         val levelModRange: IntRange = -5..5
         val levelModMaxRange: IntRange = -15..15
