@@ -48,6 +48,7 @@ In order to test the mod, simply load it up, give yourself a Master Ball, spawn 
 
 - v1.6.1-1.0.0 was using the wrong thing to point at a Pokémon’s species, leading to potential crashes. Don’t tinker when you’re running on fumes, kids. v1.6.1-1.0.1 remedied this.
 - <v1.6.1-1.0.1 pointed to the potentially overridden Pokémon when calculating points, instead of the overriding Pokémon. This led to the points never being applied properly. v1.6.1-1.0.2 remedied this.
+- v1.6.1-1.0.2 and before run into issues with the newer versions of Tim Core and use the old object version of the [`PokemonMatcher`](https://www.notion.so/PokemonMatcher-2a557e0d4afd8110a8f1c726d24524d1?pvs=21). v1.6.1-1.0.3 remedies that and moves to the string version.
 
 ## Roadmap
 
