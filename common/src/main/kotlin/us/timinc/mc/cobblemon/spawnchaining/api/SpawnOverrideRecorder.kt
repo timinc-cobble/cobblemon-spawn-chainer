@@ -17,8 +17,8 @@ interface SpawnOverrideRecorder {
     ): Boolean {
         if (!LimitedList.PokemonMatcherList.matchesList(
                 pokemon,
-                SpawnChaining.config.chainingWhitelist,
-                SpawnChaining.config.chainingBlacklist
+                SpawnChaining.config.chainingWhitelist.map(PokemonMatcher::parse).toSet(),
+                SpawnChaining.config.chainingBlacklist.map(PokemonMatcher::parse).toSet()
             )
         ) {
             debugger.debug("${pokemon.getIdentifier()} is prohibited by the blacklist/whitelist; not recording.")

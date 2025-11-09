@@ -13,6 +13,7 @@ import us.timinc.mc.cobblemon.spawnchaining.SpawnChaining
 import us.timinc.mc.cobblemon.spawnchaining.store.SpawnOverride
 import us.timinc.mc.cobblemon.timcore.Debugger
 import us.timinc.mc.cobblemon.timcore.LimitedList
+import us.timinc.mc.cobblemon.timcore.PokemonMatcher
 import us.timinc.mc.cobblemon.timcore.PokemonRepresentation
 import kotlin.random.Random.Default.nextFloat
 
@@ -25,8 +26,8 @@ class ReplacementInfluence(val context: ResourceLocation, val player: ServerPlay
         val overriddenPokemonRep = PokemonRepresentation.FromProperties(action.props)
         if (!LimitedList.PokemonMatcherList.matchesList(
                 overriddenPokemonRep.getPokemon(),
-                SpawnChaining.config.overrideWhitelist,
-                SpawnChaining.config.overrideBlacklist
+                SpawnChaining.config.overrideWhitelist.map(PokemonMatcher::parse).toSet(),
+                SpawnChaining.config.overrideBlacklist.map(PokemonMatcher::parse).toSet()
             )
         ) {
             debugger.debug("Invalid Pokemon to override, per the whitelist/blacklist.")
