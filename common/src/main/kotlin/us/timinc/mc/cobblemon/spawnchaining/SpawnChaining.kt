@@ -23,7 +23,7 @@ object SpawnChaining : AbstractMod<SpawnChaining.SpawnChainingConfig>(MOD_ID, Sp
         val notifyPlayer: Boolean = true
         val breakOnSuccess: Boolean = true
         val chainingBlacklist = mutableSetOf(
-            "labels=legendary,mythical,ultra_beast,paradox"
+            "labels=legendary,mythical,ultra_beast,paradox any_label"
         )
         val chainingWhitelist = mutableSetOf<String>()
         val overrideBlacklist = mutableSetOf(
