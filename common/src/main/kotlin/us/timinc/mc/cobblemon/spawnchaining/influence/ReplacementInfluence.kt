@@ -4,8 +4,10 @@ import com.cobblemon.mod.common.api.pokemon.PokemonProperties
 import com.cobblemon.mod.common.api.spawning.detail.PokemonSpawnAction
 import com.cobblemon.mod.common.api.spawning.detail.SpawnAction
 import com.cobblemon.mod.common.api.spawning.influence.SpawningInfluence
+import com.cobblemon.mod.common.entity.pokemon.PokemonEntity
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.entity.Entity
 import us.timinc.mc.cobblemon.counter.CounterMod
 import us.timinc.mc.cobblemon.counter.api.CounterTypeRegistry
 import us.timinc.mc.cobblemon.counter.extension.getCounterManager
@@ -34,7 +36,7 @@ class ReplacementInfluence(val context: ResourceLocation, val player: ServerPlay
             return
         }
 
-        val player = player ?: action.ctx.cause.entity as? ServerPlayer ?: return
+        val player = player ?: action.spawnablePosition.cause.entity as? ServerPlayer ?: return
         debugger.debug("Attempting a replacement influence for ${player.name.string} on the $context context.")
 
         val override = SpawnOverride.find(player, context)

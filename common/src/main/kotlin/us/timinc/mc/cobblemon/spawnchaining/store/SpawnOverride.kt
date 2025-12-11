@@ -14,7 +14,6 @@ object SpawnOverride {
         val levelMod: Int,
     )
 
-    @Suppress("MemberVisibilityCanBePrivate")
     fun record(player: ServerPlayer, properties: PokemonProperties, context: ResourceLocation, levelMod: Int) {
         spawnOverrides[player.uuid] = Entry(properties, context, levelMod)
     }
