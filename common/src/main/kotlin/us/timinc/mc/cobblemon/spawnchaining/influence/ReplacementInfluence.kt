@@ -20,8 +20,8 @@ import us.timinc.mc.cobblemon.timcore.PokemonRepresentation
 import kotlin.random.Random.Default.nextFloat
 
 class ReplacementInfluence(val context: ResourceLocation, val player: ServerPlayer? = null) : SpawningInfluence {
-    override fun affectAction(action: SpawnAction<*>) {
-        if (action !is PokemonSpawnAction) return
+    override fun affectSpawn(action: SpawnAction<*>, entity: Entity) {
+        if (action !is PokemonSpawnAction || entity !is PokemonEntity) return
 
         val debugger = SpawnChaining.debugger.getCaseDebugger()
 
@@ -45,10 +45,10 @@ class ReplacementInfluence(val context: ResourceLocation, val player: ServerPlay
             debugger.debug("No override found.")
             return
         }
-        debugger.debug("Found an override of ${override.properties.species}|${override.properties.form} with a level mod of ${override.levelMod}.")
+        debugger.debug("Found an override of ${override.properties.asString()} with a level mod of ${override.levelMod}.")
 
         val overrideChance =
-            getOverrideChance(player, debugger, PokemonRepresentation.FromProperties(override.properties))
+            getOverrideChance(player, PokemonRepresentation.FromProperties(override.properties), debugger)
         debugger.debug("Has a chance of $overrideChance.")
         val overrideRoll = nextFloat()
         debugger.debug("Rolled a $overrideRoll.")
@@ -57,8 +57,8 @@ class ReplacementInfluence(val context: ResourceLocation, val player: ServerPlay
             return
         }
 
-        action.props = override.properties
-        debugger.debug("Switched action's props to override's.")
+        entity.pokemon = override.properties.create()
+        debugger.debug("Switched entity's Pokemon to override's.")
 
         if (SpawnChaining.config.notifyPlayer) {
             player.sendSystemMessage(SpawnChaining.TranslationComponents.chained())
@@ -69,18 +69,14 @@ class ReplacementInfluence(val context: ResourceLocation, val player: ServerPlay
             debugger.debug("Broke the spawn override.")
         }
 
-        action.entity.subscribe {
-            SpawnChaining.CustomPokemonProperties.LEVEL_MOD.entityApplicator(
-                it, override.levelMod.toFloat()
-            )
-            debugger.debug("Saved the level mod onto the Pokemon.")
-        }
+        SpawnChaining.CustomPokemonProperties.LEVEL_MOD.entityApplicator(entity, override.levelMod.toFloat())
+        debugger.debug("Saved the level mod onto the Pokemon.")
     }
 
     private fun getOverrideChance(
         player: ServerPlayer,
-        debugger: Debugger.Case<SpawnChaining.SpawnChainingConfig>?,
         pokemonRep: PokemonRepresentation<PokemonProperties>,
+        debugger: Debugger.Case<SpawnChaining.SpawnChainingConfig>?,
     ): Float {
         val manager = player.getCounterManager()
 
