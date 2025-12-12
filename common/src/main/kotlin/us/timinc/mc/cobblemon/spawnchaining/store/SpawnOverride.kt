@@ -11,11 +11,18 @@ object SpawnOverride {
     data class Entry(
         val properties: PokemonProperties,
         val context: ResourceLocation,
+        val trigger: String,
         val levelMod: Int,
     )
 
-    fun record(player: ServerPlayer, properties: PokemonProperties, context: ResourceLocation, levelMod: Int) {
-        spawnOverrides[player.uuid] = Entry(properties, context, levelMod)
+    fun record(
+        player: ServerPlayer,
+        properties: PokemonProperties,
+        context: ResourceLocation,
+        levelMod: Int,
+        trigger: String
+    ) {
+        spawnOverrides[player.uuid] = Entry(properties, context, trigger, levelMod)
     }
 
     fun find(player: ServerPlayer, context: ResourceLocation): Entry? {

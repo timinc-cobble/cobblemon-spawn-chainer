@@ -14,6 +14,7 @@ interface SpawnOverrideRecorder {
     fun record(
         player: ServerPlayer,
         pokemon: Pokemon,
+        trigger: String,
         debugger: Debugger.Case<SpawnChaining.SpawnChainingConfig>,
     ): Boolean {
         if (!LimitedList.PokemonMatcherList.matchesList(
@@ -37,6 +38,7 @@ interface SpawnOverrideRecorder {
                 return false
             }
         }
+        val spawnCauseId = spawnCause.asIdentifierDefaultingNamespace(MOD_ID)
 
         val props = pokemon.createPokemonProperties(
             PokemonPropertyExtractor.SPECIES,
@@ -46,13 +48,14 @@ interface SpawnOverrideRecorder {
 
         val previousLevelMod = (SpawnChaining.CustomPokemonProperties.LEVEL_MOD.getValue(pokemon)?.toInt() ?: 0)
         debugger.debug("Previous level mod was $previousLevelMod.")
-        val levelModRoll = SpawnChaining.config.levelModRange.random()
+        val contextConfig = SpawnChaining.getContextConfig(spawnCauseId.path, trigger)
+        val levelModRoll = (contextConfig?.levelModRange ?: SpawnChaining.config.levelModRange).random()
         debugger.debug("Rolled a new level mod of $levelModRoll.")
-        val levelMod = SpawnChaining.config.levelModMaxRange.constrain(levelModRoll + previousLevelMod)
+        val levelMod = (contextConfig?.levelModMaxRange ?: SpawnChaining.config.levelModMaxRange).constrain(levelModRoll + previousLevelMod)
         props.level = pokemon.level + levelMod - previousLevelMod
         debugger.debug("Updated props level to ${props.level}.")
 
-        SpawnOverride.record(player, props, spawnCause.asIdentifierDefaultingNamespace(MOD_ID), levelMod)
+        SpawnOverride.record(player, props, spawnCause.asIdentifierDefaultingNamespace(MOD_ID), levelMod, trigger)
         debugger.debug("Recorded props against player.")
 
         return true
