@@ -5,6 +5,7 @@ import com.cobblemon.mod.common.api.events.CobblemonEvents
 import com.cobblemon.mod.common.util.asIdentifierDefaultingNamespace
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
+import us.timinc.mc.cobblemon.spawnchaining.config.ContextConfig
 import us.timinc.mc.cobblemon.spawnchaining.handler.CaptureChainer
 import us.timinc.mc.cobblemon.spawnchaining.handler.KoChainer
 import us.timinc.mc.cobblemon.spawnchaining.influence.ReplacementInfluence
@@ -41,7 +42,29 @@ object SpawnChaining : AbstractMod<SpawnChaining.SpawnChainingConfig>(MOD_ID, Sp
     object DataKeys {
         const val LEVEL_MOD = "spawn_chaining:level_mod"
         const val SPAWN_CHAINING = "spawn_chaining:chaining"
+
+        object Triggers {
+            const val CAPTURE = "capture"
+            const val KO = "ko"
+        }
     }
+
+    val contexts = listOf(TimCore.DataKeys.SpawnerTypes.PLAYER, TimCore.DataKeys.SpawnerTypes.FISHING)
+    val triggers = listOf(DataKeys.Triggers.CAPTURE, DataKeys.Triggers.KO)
+    val contextConfigs: Map<String, Map<String, ContextConfig>> =
+        contexts.fold(mapOf()) { contextConfigs, context ->
+            val triggerConfigs = triggers.fold(mapOf<String, ContextConfig>()) { triggerConfigs, trigger ->
+                triggerConfigs.plus(
+                    trigger to ConfigBuilder.load(
+                        ContextConfig::class.java,
+                        "$MOD_ID/${trigger}_${context.split(":")[1]}"
+                    )
+                )
+            }
+            contextConfigs.plus(context to triggerConfigs)
+        }
+
+    fun getContextConfig(context: String, trigger: String) = contextConfigs[context]?.get(trigger)
 
     object CustomPokemonProperties {
         val LEVEL_MOD = CustomFloatProperty(DataKeys.LEVEL_MOD)

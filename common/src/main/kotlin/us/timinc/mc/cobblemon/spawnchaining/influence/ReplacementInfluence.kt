@@ -48,7 +48,13 @@ class ReplacementInfluence(val context: ResourceLocation, val player: ServerPlay
         debugger.debug("Found an override of ${override.properties.asString()} with a level mod of ${override.levelMod}.")
 
         val overrideChance =
-            getOverrideChance(player, PokemonRepresentation.FromProperties(override.properties), debugger)
+            getOverrideChance(
+                player,
+                PokemonRepresentation.FromProperties(override.properties),
+                context,
+                override.trigger,
+                debugger
+            )
         debugger.debug("Has a chance of $overrideChance.")
         val overrideRoll = nextFloat()
         debugger.debug("Rolled a $overrideRoll.")
@@ -64,7 +70,9 @@ class ReplacementInfluence(val context: ResourceLocation, val player: ServerPlay
             player.sendSystemMessage(SpawnChaining.TranslationComponents.chained())
         }
 
-        if (SpawnChaining.config.breakOnSuccess) {
+        val breakOnSuccess = SpawnChaining.getContextConfig(override.context.path, override.trigger)?.breakOnSuccess
+            ?: SpawnChaining.config.breakOnSuccess
+        if (breakOnSuccess) {
             SpawnOverride.remove(player)
             debugger.debug("Broke the spawn override.")
         }
@@ -76,12 +84,15 @@ class ReplacementInfluence(val context: ResourceLocation, val player: ServerPlay
     private fun getOverrideChance(
         player: ServerPlayer,
         pokemonRep: PokemonRepresentation<PokemonProperties>,
+        context: ResourceLocation,
+        trigger: String,
         debugger: Debugger.Case<SpawnChaining.SpawnChainingConfig>?,
     ): Float {
         val manager = player.getCounterManager()
 
         var boost = 0F
-        for ((counterTypeName, scoreTypeList) in SpawnChaining.config.points) {
+        val points = SpawnChaining.getContextConfig(context.path, trigger)?.points ?: SpawnChaining.config.points
+        for ((counterTypeName, scoreTypeList) in points) {
             for ((scoreTypeName, value) in scoreTypeList) {
                 try {
                     val counterType = CounterTypeRegistry.findByType(counterTypeName)
@@ -99,6 +110,8 @@ class ReplacementInfluence(val context: ResourceLocation, val player: ServerPlay
             }
         }
 
-        return SpawnChaining.config.initialChance + boost
+        val initialChance =
+            SpawnChaining.getContextConfig(context.path, trigger)?.initialChance ?: SpawnChaining.config.initialChance
+        return initialChance + boost
     }
 }
