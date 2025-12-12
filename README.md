@@ -1,6 +1,6 @@
 # Spawn Chaining
 
-v1.6.1-1.0
+v1.7.1-1.1
 
 [Modrinth](https://modrinth.com/mod/cobblemon-spawn-chaining)
 
@@ -32,23 +32,19 @@ In order to test the mod, simply load it up, give yourself a Master Ball, spawn 
 
 ## Player Help
 
-[How it works](https://www.notion.so/How-it-works-28157e0d4afd807798abda74d93eef93?pvs=21)
+[How it works](https://www.notion.so/How-it-works-2c757e0d4afd81ee8b0bce38cc72d651?pvs=21)
 
-[Config Options](https://www.notion.so/Config-Options-28157e0d4afd80988bfbfa4c93a48856?pvs=21)
+[Config Options](https://www.notion.so/Config-Options-2c757e0d4afd813e8eeaf7a443b69863?pvs=21)
 
 ## Addon Dev Help
 
+### Data Pack Help
+
+[Making an Addon](https://www.notion.so/Making-an-Addon-2c757e0d4afd809d81cdfed5f2fa32b7?pvs=21)
+
 ### Resource Pack Help
 
-[Translations](https://www.notion.so/Translations-28157e0d4afd80b28b59d7aeb39b9276?pvs=21)
-
-## Mod Dev Help
-
-## Known Issues
-
-- v1.6.1-1.0.0 was using the wrong thing to point at a Pokémon’s species, leading to potential crashes. Don’t tinker when you’re running on fumes, kids. v1.6.1-1.0.1 remedied this.
-- <v1.6.1-1.0.1 pointed to the potentially overridden Pokémon when calculating points, instead of the overriding Pokémon. This led to the points never being applied properly. v1.6.1-1.0.2 remedied this.
-- v1.6.1-1.0.2 and before run into issues with the newer versions of Tim Core and use the old object version of the [`PokemonMatcher`](https://www.notion.so/PokemonMatcher-2a557e0d4afd8110a8f1c726d24524d1?pvs=21). v1.6.1-1.0.3 remedies that and moves to the string version.
+[Translations](https://www.notion.so/Translations-2c757e0d4afd81fca478e8ed4119776a?pvs=21)
 
 ## Roadmap
 

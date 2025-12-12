@@ -17,6 +17,6 @@ object CaptureChainer : AbstractHandler<PokemonCapturedEvent>(), SpawnOverrideRe
 
         debugger.debug("${capturingPlayer.name.string} captured a ${caughtPokemon.getIdentifier()}")
 
-        record(capturingPlayer, caughtPokemon, debugger)
+        record(capturingPlayer, caughtPokemon, SpawnChaining.DataKeys.Triggers.CAPTURE, debugger)
     }
 }

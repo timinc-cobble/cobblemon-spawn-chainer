@@ -2,15 +2,15 @@ package us.timinc.mc.cobblemon.spawnchaining
 
 import com.cobblemon.mod.common.api.Priority
 import com.cobblemon.mod.common.api.events.CobblemonEvents
-import com.cobblemon.mod.common.api.spawning.BestSpawner.fishingSpawner
-import com.cobblemon.mod.common.api.spawning.spawner.PlayerSpawnerFactory
-import com.cobblemon.mod.common.platform.events.PlatformEvents
+import com.cobblemon.mod.common.util.asIdentifierDefaultingNamespace
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
+import us.timinc.mc.cobblemon.spawnchaining.config.ContextConfig
 import us.timinc.mc.cobblemon.spawnchaining.handler.CaptureChainer
 import us.timinc.mc.cobblemon.spawnchaining.handler.KoChainer
 import us.timinc.mc.cobblemon.spawnchaining.influence.ReplacementInfluence
 import us.timinc.mc.cobblemon.timcore.*
+import us.timinc.mc.cobblemon.timcore.pokemonpropertyextractor.CustomPropertiesExtractor
 
 const val MOD_ID: String = "spawn_chaining"
 
@@ -23,7 +23,7 @@ object SpawnChaining : AbstractMod<SpawnChaining.SpawnChainingConfig>(MOD_ID, Sp
         val notifyPlayer: Boolean = true
         val breakOnSuccess: Boolean = true
         val chainingBlacklist = mutableSetOf(
-            "labels=legendary,mythical,ultra_beast,paradox"
+            "labels=legendary,mythical,ultra_beast,paradox any_label"
         )
         val chainingWhitelist = mutableSetOf<String>()
         val overrideBlacklist = mutableSetOf(
@@ -41,18 +41,55 @@ object SpawnChaining : AbstractMod<SpawnChaining.SpawnChainingConfig>(MOD_ID, Sp
 
     object DataKeys {
         const val LEVEL_MOD = "spawn_chaining:level_mod"
+        const val SPAWN_CHAINING = "spawn_chaining:chaining"
+
+        object Triggers {
+            const val CAPTURE = "capture"
+            const val KO = "ko"
+        }
     }
+
+    val contexts = listOf(TimCore.DataKeys.SpawnerTypes.PLAYER, TimCore.DataKeys.SpawnerTypes.FISHING)
+    val triggers = listOf(DataKeys.Triggers.CAPTURE, DataKeys.Triggers.KO)
+    val contextConfigs: Map<String, Map<String, ContextConfig>> =
+        contexts.fold(mapOf()) { contextConfigs, context ->
+            val triggerConfigs = triggers.fold(mapOf<String, ContextConfig>()) { triggerConfigs, trigger ->
+                triggerConfigs.plus(
+                    trigger to ConfigBuilder.load(
+                        ContextConfig::class.java,
+                        "$MOD_ID/${trigger}_${context.split(":")[1]}"
+                    )
+                )
+            }
+            contextConfigs.plus(context to triggerConfigs)
+        }
+
+    fun getContextConfig(context: String, trigger: String) = contextConfigs[context]?.get(trigger)
 
     object CustomPokemonProperties {
         val LEVEL_MOD = CustomFloatProperty(DataKeys.LEVEL_MOD)
     }
 
+    object FeatureExtractors {
+        val CUSTOM_PROPERTY_CHAINING = CustomPropertiesExtractor(DataKeys.SPAWN_CHAINING)
+    }
+
     init {
         CobblemonEvents.POKEMON_CAPTURED.subscribe(Priority.LOWEST, CaptureChainer::handle)
         TimCoreEvents.BATTLE_FAINTED_PVW_WILD.subscribe(Priority.LOWEST, KoChainer::handle)
-        PlayerSpawnerFactory.influenceBuilders.add { ReplacementInfluence(TimCore.DataKeys.SpawnCauses.PLAYER_SPAWNER) }
-        PlatformEvents.SERVER_STARTED.subscribe(Priority.LOWEST) {
-            fishingSpawner.influences.add(ReplacementInfluence(TimCore.DataKeys.SpawnCauses.FISHING))
-        }
+        registerPlayerSpawnerInfluence(
+            ReplacementInfluence(
+                TimCore.DataKeys.SpawnerTypes.PLAYER.asIdentifierDefaultingNamespace(
+                    MOD_ID
+                )
+            )
+        )
+        registerFishingSpawnerInfluence(
+            ReplacementInfluence(
+                TimCore.DataKeys.SpawnerTypes.FISHING.asIdentifierDefaultingNamespace(
+                    MOD_ID
+                )
+            )
+        )
     }
 }

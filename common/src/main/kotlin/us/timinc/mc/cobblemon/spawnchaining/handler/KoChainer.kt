@@ -18,6 +18,6 @@ object KoChainer : AbstractHandler<BattleFaintedEvent>(), SpawnOverrideRecorder 
 
         debugger.debug("${koingPlayer.name.string} knocked out a ${targetPokemon.getIdentifier()}")
 
-        record(koingPlayer, targetPokemon, debugger)
+        record(koingPlayer, targetPokemon, SpawnChaining.DataKeys.Triggers.KO, debugger)
     }
 }
