@@ -46,6 +46,10 @@ In order to test the mod, simply load it up, give yourself a Master Ball, spawn 
 
 [Translations](https://www.notion.so/Translations-2c757e0d4afd81fca478e8ed4119776a?pvs=21)
 
+## Known Issues
+
+- ≤v1.7.1-1.1.0 wasn’t referencing the context configs appropriately (it was trynna get them by path when they were keyed by the full string version of the ID). v1.7.1-1.1.1 fixes this.
+
 ## Roadmap
 
 If you’d like to keep up with the work being done on the mod, please join [the Discord](https://discord.com/invite/WKAR27SdSv) and subscribe to notifications on the channel for this content. You can also keep track of the to do list available on the mod’s main page ([Spawn Chaining](https://www.notion.so/Spawn-Chaining-28057e0d4afd80b48604fd8c87da5539?pvs=21)).
