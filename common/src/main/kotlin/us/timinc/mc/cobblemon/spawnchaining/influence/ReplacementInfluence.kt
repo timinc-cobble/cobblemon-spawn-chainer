@@ -91,7 +91,7 @@ class ReplacementInfluence(val context: ResourceLocation, val player: ServerPlay
         val manager = player.getCounterManager()
 
         var boost = 0F
-        val points = SpawnChaining.getContextConfig(context.path, trigger)?.points ?: SpawnChaining.config.points
+        val points = SpawnChaining.getContextConfig(context.toString(), trigger)?.points ?: SpawnChaining.config.points
         for ((counterTypeName, scoreTypeList) in points) {
             for ((scoreTypeName, value) in scoreTypeList) {
                 try {
@@ -111,7 +111,7 @@ class ReplacementInfluence(val context: ResourceLocation, val player: ServerPlay
         }
 
         val initialChance =
-            SpawnChaining.getContextConfig(context.path, trigger)?.initialChance ?: SpawnChaining.config.initialChance
+            SpawnChaining.getContextConfig(context.toString(), trigger)?.initialChance ?: SpawnChaining.config.initialChance
         return initialChance + boost
     }
 }
