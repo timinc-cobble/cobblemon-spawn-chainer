@@ -1,6 +1,6 @@
 # Spawn Chaining
 
-v1.7.2-1.1
+v1.7.3-1.1
 
 [Modrinth](https://modrinth.com/mod/cobblemon-spawn-chaining)
 
@@ -32,19 +32,19 @@ In order to test the mod, simply load it up, give yourself a Master Ball, spawn 
 
 ## Player Help
 
-[How it works](https://www.notion.so/How-it-works-2f457e0d4afd81c286bbc19f7b42b271?pvs=21)
+[How it works](https://www.notion.so/How-it-works-2fc57e0d4afd8165878df5c56b6436ac?pvs=21)
 
-[Config Options](https://www.notion.so/Config-Options-2f457e0d4afd8188b23bc187d0a60fd6?pvs=21)
+[Config Options](https://www.notion.so/Config-Options-2fc57e0d4afd81009277de56420204f8?pvs=21)
 
 ## Addon Dev Help
 
 ### Data Pack Help
 
-[Making an Addon](https://www.notion.so/Making-an-Addon-2f457e0d4afd81efa38adc1d5402e104?pvs=21)
+[Making an Addon](https://www.notion.so/Making-an-Addon-2fc57e0d4afd81edb540c66bae83b220?pvs=21)
 
 ### Resource Pack Help
 
-[Translations](https://www.notion.so/Translations-2f457e0d4afd810494d3d64715a08c1d?pvs=21)
+[Translations](https://www.notion.so/Translations-2fc57e0d4afd819cafd0eaec6b8935df?pvs=21)
 
 ## Known Issues
 
