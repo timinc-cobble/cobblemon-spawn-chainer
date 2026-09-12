@@ -31,6 +31,7 @@ object SpawnChaining : AbstractMod<SpawnChaining.SpawnChainingConfig>(MOD_ID, Sp
         )
         val overrideWhitelist = mutableSetOf<String>()
         val assumePlayerSpawnered: Boolean = true
+        val treatActivatedHabitatSpawnsAsPlayerSpawns: Boolean = true
         val levelModRange: IntRange = -5..5
         val levelModMaxRange: IntRange = -15..15
     }
@@ -89,6 +90,14 @@ object SpawnChaining : AbstractMod<SpawnChaining.SpawnChainingConfig>(MOD_ID, Sp
                 TimCore.DataKeys.SpawnerTypes.FISHING.asIdentifierDefaultingNamespace(
                     MOD_ID
                 )
+            )
+        )
+        registerHabitatSpawnerInfluence(
+            ReplacementInfluence(
+                TimCore.DataKeys.SpawnerTypes.PLAYER.asIdentifierDefaultingNamespace(
+                    MOD_ID
+                ),
+                enabled = { config.treatActivatedHabitatSpawnsAsPlayerSpawns }
             )
         )
     }

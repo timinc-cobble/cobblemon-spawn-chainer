@@ -19,8 +19,13 @@ import us.timinc.mc.cobblemon.timcore.PokemonMatcher
 import us.timinc.mc.cobblemon.timcore.PokemonRepresentation
 import kotlin.random.Random.Default.nextFloat
 
-class ReplacementInfluence(val context: ResourceLocation, val player: ServerPlayer? = null) : SpawningInfluence {
+class ReplacementInfluence(
+    val context: ResourceLocation,
+    val player: ServerPlayer? = null,
+    val enabled: () -> Boolean = { true },
+) : SpawningInfluence {
     override fun affectSpawn(action: SpawnAction<*>, entity: Entity) {
+        if (!enabled()) return
         if (action !is PokemonSpawnAction || entity !is PokemonEntity) return
 
         val debugger = SpawnChaining.debugger.getCaseDebugger()
