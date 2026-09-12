@@ -38,6 +38,14 @@ interface SpawnOverrideRecorder {
                 return false
             }
         }
+        if (spawnCause == TimCore.DataKeys.SpawnerTypes.HABITAT) {
+            if (!SpawnChaining.config.treatActivatedHabitatSpawnsAsPlayerSpawns) {
+                debugger.debug("Activated habitat spawns are ignored for chaining.")
+                return false
+            }
+            debugger.debug("Treating activated habitat spawn as player spawnered.")
+            spawnCause = TimCore.DataKeys.SpawnerTypes.PLAYER
+        }
         val spawnCauseId = spawnCause.asIdentifierDefaultingNamespace(MOD_ID)
 
         val props = pokemon.createPokemonProperties(
